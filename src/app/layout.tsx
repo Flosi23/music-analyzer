@@ -1,6 +1,9 @@
+"use client";
+
 import "./globals.css";
 import React from "react";
 import { FontSetup } from "@components/general/Font";
+import { SessionProvider } from "next-auth/react";
 
 export default function RootLayout({
 	children,
@@ -10,8 +13,10 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={"font-outfit min-h-screen bg-accent-dark"}>
-				<FontSetup />
-				{children}
+				<SessionProvider>
+					<FontSetup />
+					{children}
+				</SessionProvider>
 			</body>
 		</html>
 	);

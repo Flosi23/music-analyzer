@@ -31,7 +31,9 @@
 			"@components/*": ["./src/components/*"],
 			"@components": ["./src/components"],
 			"@db/*": ["./db/*"],
-			"@db": ["./db"]
+			"@db": ["./db"],
+			"@types/*": ["./src/types/*"],
+			"@types": ["./src/types"]
 		}
 	},
 	"include": [
