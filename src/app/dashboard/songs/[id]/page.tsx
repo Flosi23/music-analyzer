@@ -1,84 +1,119 @@
 "use client";
+import { useGetRequest } from "@lib/request/clientRequest";
+import { SpotifyGetTrackResponse } from "@app/api/spotify/track/[id]/route";
+import TextHeading from "@components/text/TextHeading";
+import SongInfo from "@components/molecules/SongInfo";
+import Index from "@components/molecules/SongAnalysis";
+import PlayButton from "@components/molecules/PlayButton";
+import React from "react";
+import Link from "next/link";
+import Card from "@components/atoms/Card";
+import TextTitle from "@components/text/TextTitle";
+import CoverImage from "@components/atoms/CoverImage";
 
-import ArtistView from "@components/songpage/ArtistView";
-import BarChart from "@components/songpage/BarChart";
-import { BigHeading } from "@components/general/BigHeading";
-import BigTileContainer from "@components/songpage/BigTileContainer";
-import Info from "@components/songpage/Info";
-import Loading from "@components/general/Loading";
-import SmallTileContainer from "@components/songpage/SmallTileContainer";
-import { SongData } from "@lib/interfaces";
-import SongImage from "@components/songpage/SongImage";
-import SongPreview from "@components/songpage/SongPreview";
-import { useSpotifyApi } from "@lib/dataFetching";
+interface Params {
+	id: string;
+}
 
-const Page = ({ params }: { params: { id: String } }) => {
-	const { id } = params;
-	//fetch data
-	const [data, session, loading] = useSpotifyApi<SongData>(
-		`${process.env.API_URL}/spotify/song/${id}`,
+export default function Page({ params }: { params: Params }) {
+	const { data } = useGetRequest<SpotifyGetTrackResponse>(
+		`/api/spotify/track/${params.id}`,
+		{
+			caching: true,
+		},
 	);
-
-	if (loading)
-		return (
-			<div className="flex justify-center items-center w-full h-full">
-				<Loading />
-			</div>
-		);
-
-	if (!data) return <>Song not found</>;
-
-	if (!session) return <>No Session please login again</>;
-
-	console.log(data.previewUrl);
 
 	return (
 		<>
-			<BigHeading text={data.name} />
-			<div className="flex justify-center items-center ">
-				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-					<SongImage imageUrl={data.album.images[0]} />
-					<BigTileContainer>
-						<Info
-							album={data.album.name}
-							releaseDate={data.releaseDate}
-							releaseDatePrecision={data.releaseDatePrecision}
-							keyl={data.key}
-							mode={data.mode}
-							bpm={data.bpm}
-							durationMs={data.durationMs}
-							genres={data.genres}
-						/>
-					</BigTileContainer>
-					<BigTileContainer>
-						<BarChart
-							popularity={data.popularity}
-							danceability={data.danceability}
-							energy={data.energy}
-							loudness={data.loudness}
-							speechiness={data.speechiness}
-							acousticness={data.acousticness}
-							instrumentalness={data.instrumentalness}
-							liveness={data.liveness}
-							valence={data.valence}
-						/>
-					</BigTileContainer>
-					{data.previewUrl != null ? (
-						<SmallTileContainer>
-							<SongPreview src={data.previewUrl} />
-						</SmallTileContainer>
-					) : (
-						<></>
-					)}
-					{data.artists.slice(0, 2).map((artist) => (
-						<SmallTileContainer key={artist.id}>
-							<ArtistView key={artist.id} artist={artist} />
-						</SmallTileContainer>
+			<TextHeading size="medium" className="mb-8">
+				{data?.name}
+			</TextHeading>
+			<div className="grid grid-cols-3 gap-6">
+				<CoverImage
+					color="bg-primary-container dark:bg-on-surface"
+					shadowColor="shadow-on-surface dark:shadow-primary-container"
+					padding="p-4"
+					shadowSize={1.5}
+					image={data?.album?.images[0].url}
+				/>
+				<SongInfo
+					album={data?.album?.name}
+					releaseDate={data?.album?.release_date}
+					keyAndMode={getKeyAndModeString(data)}
+					bpm={data?.audioAnalysis?.track?.tempo}
+					durationMS={data?.duration_ms}
+					genres={data?.genres}
+				/>
+				<Index
+					popularity={
+						data?.popularity ? data.popularity / 100 : undefined
+					}
+					danceability={data?.audioFeatures?.danceability}
+					energy={data?.audioFeatures?.energy}
+					instrumentalness={data?.audioFeatures?.instrumentalness}
+					acousticness={data?.audioFeatures?.acousticness}
+					valence={data?.audioFeatures?.valence}
+				/>
+			</div>
+			<div className="grid grid-cols-3 gap-6 mt-6">
+				<PlayButton
+					audioSrc={data?.preview_url ? data.preview_url : undefined}
+				/>
+				{data?.artists
+					?.slice(0, Math.min(data?.artists?.length, 2))
+					.map((artist) => (
+						<Link href={`/dashboard/artists/${artist.id}`}>
+							<Card className="h-full flex items-center justify-between gap-4">
+								<TextTitle size="medium">
+									{artist.name}
+								</TextTitle>
+								<CoverImage
+									imageHeight="h-32"
+									shadow={false}
+									padding={"p-3"}
+									image={
+										artist.images
+											? artist.images[0].url
+											: undefined
+									}
+								/>
+							</Card>
+						</Link>
 					))}
-				</div>
 			</div>
 		</>
 	);
+}
+
+const keyMap: { [key: number]: string } = {
+	0: "C",
+	1: "C♯",
+	2: "D",
+	3: "D♯",
+	4: "E",
+	5: "F",
+	6: "F♯",
+	7: "G",
+	8: "G♯",
+	9: "A",
+	10: "A♯",
+	11: "B",
 };
 
-export default Page;
+const modeMap: { [key: number]: string } = {
+	0: "Minor",
+	1: "Major",
+};
+
+function getKeyAndModeString(
+	data?: SpotifyGetTrackResponse,
+): string | undefined {
+	const key = data?.audioFeatures?.key;
+	const mode = data?.audioFeatures?.mode;
+
+	if (key === undefined || mode === undefined) {
+		return undefined;
+	}
+
+	return `${keyMap[key]} ${modeMap[mode]}`;
+}

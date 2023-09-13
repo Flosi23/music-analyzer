@@ -1,0 +1,4 @@
+.bar:hover > .desc {
+    opacity: 1;
+    pointer-events: auto;
+}

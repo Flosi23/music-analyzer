@@ -1,32 +1,15 @@
-"use client";
-import "@app/globals.css";
-import React from "react";
-import { Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
-import { Header } from "@components/general/Header";
+import { PropsWithChildren } from "react";
+import Container from "@components/atoms/Container";
+import NavBar from "@components/organisms/NavBar";
 
-interface RootLayoutProps {
-	children: React.ReactNode;
-	session: Session;
-}
-
-export default function RootLayout({ children, session }: RootLayoutProps) {
+export default function Layout({ children }: PropsWithChildren<{}>) {
 	return (
-		<html lang="en">
-			<body className={"font-outfit min-h-screen bg-accent-dark"}>
-				<SessionProvider session={session}>
-					<Header />
-
-					<div className={"flex justify-center"}>
-						<main
-							className={
-								"w-full lg:w-box-normal m-0 px-6 md:px-10"
-							}>
-							{children}
-						</main>
-					</div>
-				</SessionProvider>
-			</body>
-		</html>
+		<>
+			<Container>
+				<NavBar />
+			</Container>
+			<div className="daisy-divider mt-0 mb-5 bg-primary h-1"></div>
+			<Container className="flex flex-col grow">{children}</Container>
+		</>
 	);
 }

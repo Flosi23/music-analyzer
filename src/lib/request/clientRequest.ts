@@ -1,4 +1,3 @@
-import { Router, useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 type RequestMethod = "POST" | "GET";
@@ -28,13 +27,17 @@ type RequestMethod = "POST" | "GET";
  * Example:
  *
  * ```
- * //somewhere inside a React Component
- * //only destructure the vars you actually need!
+ * // somewhere inside a React Component
+ * // only destructure the vars you actually need!
  * const {loading, error, errorMessage, data, send} = usePostRequest<User>("/api/auth/login");
  * ```
  */
 export function usePostRequest<T = Record<string, never>>(url: string) {
-	return useRequest<T>(url, "POST");
+	return useRequest<T>(url, "POST", {});
+}
+
+interface useGetOptions extends Options {
+	dispatchImmediately?: boolean;
 }
 
 /**
@@ -59,26 +62,26 @@ export function usePostRequest<T = Record<string, never>>(url: string) {
  * - `errorMessage`
  * - `loading`: request in progress?
  * - `data`: return data, might be null
+ * - `send`: call this function to send the request.
  *
  * Example:
  *
  * ```
- * //somewhere inside a React Component
- * //only destructure the vars you actually need!
+ * // somewhere inside a React Component
+ * // only destructure the vars you actually need!
  * const {loading, error, errorMessage, data} = useGetRequest<User>("/api/user");
  * ```
  */
-export function useGetRequest<T>(
-	url: string,
-	dispatchImmediately: boolean = true,
-) {
-	const { send, ...values } = useRequest<T>(url, "GET");
+export function useGetRequest<T>(url: string, options: useGetOptions = {}) {
+	const { send, ...values } = useRequest<T>(url, "GET", {
+		caching: options.caching ?? false,
+	});
 
 	/* pass an empty array of dependencies to ensure that 
-	the request is only send once, when the component mounts
-	*/
+    the request is only send once, when the component mounts
+    */
 	useEffect(() => {
-		if (dispatchImmediately) {
+		if (options.dispatchImmediately !== false) {
 			send();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -87,26 +90,48 @@ export function useGetRequest<T>(
 	return { ...values, send };
 }
 
-function useRequest<T>(url: string, method: RequestMethod) {
+interface Options {
+	caching?: boolean;
+}
+
+function useRequest<T = {}>(
+	url: string,
+	method: RequestMethod,
+	options: Options,
+) {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 	const [errorMessage, setErrorMessage] = useState("");
-	const [data, setData] = useState<T | null>(null);
-	const router = useRouter();
+	const [data, setData] = useState<T | undefined>(undefined);
 
 	function send(body: Record<string, any> | null = null) {
 		setLoading(true);
-
 		/*
-		A second error var has to be used to store whether the request failed or not.
-		If the information is saved in the state "error" it wont have updated once the response body
-		is parsed and the errorMessage wont be extracted
-		*/
+        A second error var has to be used to store whether the request failed or not.
+        If the information is saved in the state "error" it wont have updated once the response body
+        is parsed and the errorMessage wont be extracted
+        */
 		let reqError = false;
 		/* 
-		Chained callback functions must be used here instead of await.
-		Otherwise the states (loading, error, data, etc..) wouldn't update correctly
-		*/
+        Chained callback functions must be used here instead of await.
+        Otherwise the states (loading, error, data, etc..) wouldn't update correctly
+        */
+
+		if (url.startsWith("/")) {
+			url = `${process.env.APP_URL}${url}`;
+		}
+
+		if (options.caching) {
+			const cachedReq = sessionStorage.getItem(createHash(url, method));
+
+			if (cachedReq) {
+				setError(false);
+				setData(JSON.parse(cachedReq));
+				setLoading(false);
+				return;
+			}
+		}
+
 		fetch(url, {
 			headers: {
 				Accept: "application/json",
@@ -117,10 +142,6 @@ function useRequest<T>(url: string, method: RequestMethod) {
 			body: body ? JSON.stringify(body) : null,
 		})
 			.then((res) => {
-				if (res.status === 401) {
-					router.push("/dashboard");
-				}
-
 				setError(!res.ok);
 				reqError = !res.ok;
 				return res.json();
@@ -128,12 +149,17 @@ function useRequest<T>(url: string, method: RequestMethod) {
 			.then((data) => {
 				if (reqError) {
 					/*
-					Surrounded with a try catch expr since its not sure
-					if this value exists on the response data
-					*/
+                    Surrounded with a try catch expr since it's not sure
+                    if this value exists on the response data
+                    */
 					try {
-						setErrorMessage(data.errors[0].message);
+						setErrorMessage(data.error);
 					} catch (e) {}
+				} else if (options.caching && data) {
+					sessionStorage.setItem(
+						createHash(url, method),
+						JSON.stringify(data),
+					);
 				}
 
 				setData(data);
@@ -142,4 +168,8 @@ function useRequest<T>(url: string, method: RequestMethod) {
 	}
 
 	return { loading, error, errorMessage, data, send };
+}
+
+function createHash(url: string, method: RequestMethod): string {
+	return `${url}${method}`;
 }
