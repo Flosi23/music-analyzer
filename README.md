@@ -1,3 +1,9 @@
+## Credits
+Original idea and design of this website is from:
+- @obitastico
+- @sycrw
+- @leonfroschauer
+
 ## Get Started 💨
 
 Clone the repo using git:
