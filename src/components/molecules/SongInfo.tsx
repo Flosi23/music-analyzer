@@ -46,7 +46,7 @@ export default function SongInfo({
 			<div className="flex flex-wrap gap-2 mt-5">
 				{genres
 					?.slice(0, Math.min(genres?.length, 6))
-					.map((genre) => <Chip>{genre}</Chip>)}
+					.map((genre) => <Chip key={genre}>{genre}</Chip>)}
 			</div>
 		</Card>
 	);

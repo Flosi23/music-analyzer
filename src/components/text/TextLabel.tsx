@@ -1,5 +1,5 @@
-import {TypographyProps} from "@components/text/common";
-import {PropsWithChildren} from "react";
+import { TypographyProps } from "@components/text/common";
+import { PropsWithChildren } from "react";
 
 /**
  * Label styles are smaller, utilitarian styles,

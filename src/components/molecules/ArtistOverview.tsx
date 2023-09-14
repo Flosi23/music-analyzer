@@ -12,12 +12,7 @@ interface Props {
 	genres?: string[];
 }
 
-export default function ArtistOverview({
-	image,
-	followers,
-	popularity,
-	genres,
-}: Props) {
+export default function ArtistOverview({ image, followers, genres }: Props) {
 	return (
 		<Card className="flex justify-between">
 			<CoverImage
@@ -35,7 +30,7 @@ export default function ArtistOverview({
 				</TextHeading>
 				<TextBody size="medium">Followers</TextBody>
 				<div className="mt-4 flex gap-2 flex-wrap">
-					{genres?.map((genre) => <Chip>{genre}</Chip>)}
+					{genres?.map((genre) => <Chip key={genre}>{genre}</Chip>)}
 				</div>
 			</div>
 		</Card>

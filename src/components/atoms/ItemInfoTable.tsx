@@ -11,7 +11,11 @@ export default function ItemInfoTable({ rows, className }: Props) {
 			<tbody>
 				{rows.map(({ label, value }) =>
 					value && label ? (
-						<ItemInfoTableRow label={label} value={value} />
+						<ItemInfoTableRow
+							key={`${label}${value}`}
+							label={label}
+							value={value}
+						/>
 					) : (
 						<></>
 					),

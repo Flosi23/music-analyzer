@@ -62,7 +62,9 @@ export default function Page({ params }: { params: Params }) {
 				{data?.artists
 					?.slice(0, Math.min(data?.artists?.length, 2))
 					.map((artist) => (
-						<Link href={`/dashboard/artists/${artist.id}`}>
+						<Link
+							key={artist.id}
+							href={`/dashboard/artists/${artist.id}`}>
 							<Card className="h-full flex items-center justify-between gap-4">
 								<TextTitle size="medium">
 									{artist.name}

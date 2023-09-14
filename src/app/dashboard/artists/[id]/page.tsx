@@ -36,7 +36,6 @@ export default function Page({ params }: { params: Params }) {
 						genres={data?.genres}
 						image={data?.images ? data.images[0].url : undefined}
 						followers={data?.followers?.total}
-						popularity={data?.popularity?.toString()}
 					/>
 					<div>
 						<TextTitle size="large" className="mt-12 mb-4">
@@ -50,6 +49,7 @@ export default function Page({ params }: { params: Params }) {
 								)
 								.map((artist) => (
 									<Link
+										key={artist.id}
 										href={`/dashboard/artists/${artist.id}`}>
 										<Card className="flex flex-col h-full gap-2">
 											<CoverImage
@@ -74,14 +74,18 @@ export default function Page({ params }: { params: Params }) {
 					{data?.topSongs
 						.slice(0, Math.min(4, data?.topSongs.length))
 						.map((track) => (
-							<Link href={`/dashboard/songs/${track.id}`}>
+							<Link
+								key={track.id}
+								href={`/dashboard/songs/${track.id}`}>
 								<Card className="flex flex-col h-full gap-2">
 									<CoverImage
 										shadow={false}
 										padding="p-3"
 										image={track.album?.images[0].url}
 									/>
-									<TextTitle size="small">
+									<TextTitle
+										size="small"
+										className="overflow-ellipsis overflow-hidden">
 										{track.name}
 									</TextTitle>
 								</Card>

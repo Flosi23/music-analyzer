@@ -1,5 +1,5 @@
-import {TypographyProps} from "@components/text/common";
-import {PropsWithChildren} from "react";
+import { TypographyProps } from "@components/text/common";
+import { PropsWithChildren } from "react";
 
 /**
  * Headlines are best-suited for short, high-emphasis text

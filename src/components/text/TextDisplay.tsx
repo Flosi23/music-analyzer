@@ -1,5 +1,5 @@
-import {TypographyProps} from "@components/text/common";
-import {PropsWithChildren} from "react";
+import { TypographyProps } from "@components/text/common";
+import { PropsWithChildren } from "react";
 
 /**
  * As the largest text on the screen, display styles are reserved for short,

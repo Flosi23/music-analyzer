@@ -1,5 +1,5 @@
 import daisyui from "daisyui";
-import {fontFamily} from "tailwindcss/defaultTheme";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -41,15 +41,5 @@ module.exports = {
 				"on-surface": "rgb(var(--on-surface) / <alpha-value>)",
 			},
 		},
-	},
-	plugins: [daisyui],
-	daisyui: {
-		themes: false,
-		base: false,
-		styled: false,
-		utils: false,
-		rtl: false,
-		prefix: "daisy-",
-		logs: true,
 	},
 };

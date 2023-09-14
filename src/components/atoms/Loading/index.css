@@ -1,36 +1,37 @@
 .spinner {
-    width: 1em;
-    height: 1em;
-    border-radius: 50%;
+	width: 1em;
+	height: 1em;
+	border-radius: 50%;
 }
 
 .spinner .line {
-    fill: none;
-    stroke-linecap: round;
-    transform-origin: 50% 50%;
-    transform: rotate3d(0, 0, 1, 0deg);
-    animation: 2156ms spinner-arc ease-in-out infinite,
-    1829ms spinner-rotate linear infinite;
+	fill: none;
+	stroke-linecap: round;
+	transform-origin: 50% 50%;
+	transform: rotate3d(0, 0, 1, 0deg);
+	animation:
+		2156ms spinner-arc ease-in-out infinite,
+		1829ms spinner-rotate linear infinite;
 }
 
 .spinner .ring {
-    fill: none;
-    opacity: 0.03;
+	fill: none;
+	opacity: 0.03;
 }
 
 @keyframes spinner-rotate {
-    to {
-        transform: rotate3d(0, 0, 1, 360deg);
-    }
+	to {
+		transform: rotate3d(0, 0, 1, 360deg);
+	}
 }
 
 @keyframes spinner-arc {
-    from {
-        stroke-dasharray: 0 150;
-        stroke-dashoffset: 0;
-    }
-    to {
-        stroke-dasharray: 100 150;
-        stroke-dashoffset: -140;
-    }
+	from {
+		stroke-dasharray: 0 150;
+		stroke-dashoffset: 0;
+	}
+	to {
+		stroke-dasharray: 100 150;
+		stroke-dashoffset: -140;
+	}
 }

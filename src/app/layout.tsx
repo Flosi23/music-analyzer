@@ -15,7 +15,7 @@ export default function RootLayout({
 			<body className="bg-surface">
 				<FontProvider>
 					<SessionProvider>
-						<div className="min-h-screen pb-10 flex flex-col font-outfit">
+						<div className="min-h-screen pb-10 flex flex-col font-outfit text-on-surface">
 							{children}
 						</div>
 					</SessionProvider>

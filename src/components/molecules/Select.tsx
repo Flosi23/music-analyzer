@@ -40,6 +40,7 @@ export default function Select<T>({
 					<div className="absolute z-10 shadow-2xl w-max bg-white rounded-lg top-full mt-2 right-0 p-2">
 						{options.map(({ value, name }) => (
 							<div
+								key={`${value}`}
 								onClick={() => select(value)}
 								className="w-full rounded-lg text-black p-2 hover:bg-primary-container hover:text-on-primary-container">
 								<TextLabel size="large">{name}</TextLabel>
