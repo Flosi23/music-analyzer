@@ -29,7 +29,12 @@ export default function Select<T>({
 		<div className="relative">
 			<Button onClick={toggleOpen}>
 				<div className="flex items-center gap-1">
-					{options.find((option) => option.value === selected)?.name}
+					<TextLabel size="large">
+						{
+							options.find((option) => option.value === selected)
+								?.name
+						}
+					</TextLabel>
 					<ChevronDownIcon
 						className={`w-6 mt-1 transition-all ${
 							open ? "rotate-0" : "-rotate-90"

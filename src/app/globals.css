@@ -74,3 +74,21 @@
 		}
 	}
 }
+
+html {
+	font-size: 12px;
+}
+
+/* tailwind md breakpoint*/
+@media (min-width: 768px) {
+	html {
+		font-size: 14px;
+	}
+}
+
+/* tailwind lg breakpoint*/
+@media (min-width: 1024px) {
+	html {
+		font-size: 16px;
+	}
+}

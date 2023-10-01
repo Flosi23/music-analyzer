@@ -79,7 +79,7 @@ interface BarProps {
 
 function Bar({ name, value, description }: BarProps) {
 	return (
-		<div className="relative cursor-pointer bar">
+		<div className="relative cursor-pointer bar mb-2">
 			<TextLabel size="medium">{name}</TextLabel>
 			<ProgressBar value={value} min={0} max={1} />
 			<div className="shadow-2xl text-on-primary transition-all absolute z-10 p-2 rounded-lg opacity-0 pointer-events-none bg-primary top-100 mt-2 desc">

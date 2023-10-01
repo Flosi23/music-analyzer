@@ -268,7 +268,11 @@ $RECYCLE.BIN/
 # === Start of generic rules ===
 
 .env.local
+.env.development
+.env.production
+/openapi
 /db/main.db
+
 
 # === Start of specific rules ===
 # === End of specific rules ===

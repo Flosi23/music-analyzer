@@ -52,12 +52,12 @@ export default function Page() {
 	return (
 		<>
 			<div className="flex justify-between items-center mb-8">
-				<TextDisplay size="small">
+				<TextDisplay size="small" className="w-min sm:w-fit">
 					Hey, @{session.data?.user?.name}
 				</TextDisplay>
 				<SelectTimeRange onSelect={setTimeRange} />
 			</div>
-			<div className="grid grid-cols-2 gap-8">
+			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 				<OverviewCard
 					title={"Top Songs"}
 					items={tracksToOverviewItems(topTracks?.items)}

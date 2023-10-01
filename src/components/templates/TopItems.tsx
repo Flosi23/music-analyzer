@@ -17,7 +17,7 @@ export default function TopItems({ items }: Props) {
 
 	return (
 		<>
-			<div className="grid grid-cols-2 mt-7 grid-rows-2 gap-4">
+			<div className="grid lg:grid-cols-2 mt-7 grid-rows-2 gap-4">
 				{top3items.map((item, i) => (
 					<Link
 						key={i + 1}
@@ -33,7 +33,7 @@ export default function TopItems({ items }: Props) {
 					</Link>
 				))}
 			</div>
-			<div className="mt-4 flex flex-col gap-4 mx-32">
+			<div className="mt-4 flex flex-col gap-4 lg:mx-32">
 				{otherItems.map((item, i) => (
 					<TopItemCard
 						key={i + 4}

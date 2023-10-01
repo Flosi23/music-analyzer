@@ -24,10 +24,10 @@ export default function TextDisplay({
 function mapTextSize(size: TypographyProps["size"]) {
 	switch (size) {
 		case "small":
-			return "text-8xl";
+			return "text-7xl lg:text-8xl";
 		case "medium":
-			return "text-9xl";
+			return "text-8xl lg:text-9xl";
 		case "large":
-			return "text-10xl";
+			return "text-9xl lg:text-10xl";
 	}
 }

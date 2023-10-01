@@ -28,7 +28,7 @@ export default function Page({ params }: { params: Params }) {
 			<TextHeading size="medium" className="mb-8">
 				{data?.name}
 			</TextHeading>
-			<div className="grid grid-cols-3 gap-6">
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 				<CoverImage
 					color="bg-primary-container dark:bg-on-surface"
 					shadowColor="shadow-on-surface dark:shadow-primary-container"
@@ -55,7 +55,7 @@ export default function Page({ params }: { params: Params }) {
 					valence={data?.audioFeatures?.valence}
 				/>
 			</div>
-			<div className="grid grid-cols-3 gap-6 mt-6">
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
 				<PlayButton
 					audioSrc={data?.preview_url ? data.preview_url : undefined}
 				/>
@@ -78,6 +78,7 @@ export default function Page({ params }: { params: Params }) {
 											? artist.images[0].url
 											: undefined
 									}
+									className="min-w-max"
 								/>
 							</Card>
 						</Link>
