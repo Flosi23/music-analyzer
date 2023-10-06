@@ -14,11 +14,14 @@ import {
 	TracksApi,
 	UsersApi,
 } from "@lib/spotify/generated";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Account } from "@prisma/client";
 import { BASE_PATH } from "@lib/spotify/generated/base";
 import * as process from "process";
-import { SpotifyRefreshAccessTokenResponse } from "@lib/spotify/types";
+import {
+	SpotifyErrorResponse,
+	SpotifyRefreshAccessTokenResponse,
+} from "@lib/spotify/types";
 import prisma from "@lib/prisma";
 
 export default class SpotifyClient {
@@ -51,6 +54,15 @@ export default class SpotifyClient {
 			config.headers.Authorization = `${account.token_type} ${account.access_token}`;
 			return config;
 		});
+
+		axiosInstance.interceptors.response.use(
+			(res) => res,
+			(error: AxiosError<SpotifyErrorResponse>) => {
+				throw new Error(
+					error.response?.data?.error_description || error.message,
+				);
+			},
+		);
 
 		this.albums = new AlbumsApi(config, BASE_PATH, axiosInstance);
 		this.artists = new ArtistsApi(config, BASE_PATH, axiosInstance);

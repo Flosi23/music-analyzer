@@ -10,21 +10,26 @@ import Link from "next/link";
 import Card from "@components/atoms/Card";
 import TextTitle from "@components/text/TextTitle";
 import CoverImage from "@components/atoms/CoverImage";
+import PageWrapper from "@components/templates/PageWrapper";
 
 interface Params {
 	id: string;
 }
 
 export default function Page({ params }: { params: Params }) {
-	const { data } = useGetRequest<SpotifyGetTrackResponse>(
-		`/api/spotify/track/${params.id}`,
-		{
-			caching: true,
-		},
-	);
+	const { error, errorMessage, loading, data } =
+		useGetRequest<SpotifyGetTrackResponse>(
+			`/api/spotify/track/${params.id}`,
+			{
+				caching: true,
+			},
+		);
 
 	return (
-		<>
+		<PageWrapper
+			error={error}
+			errorMessage={errorMessage}
+			loading={!data || loading}>
 			<TextHeading size="medium" className="mb-8">
 				{data?.name}
 			</TextHeading>
@@ -84,7 +89,7 @@ export default function Page({ params }: { params: Params }) {
 						</Link>
 					))}
 			</div>
-		</>
+		</PageWrapper>
 	);
 }
 

@@ -4,3 +4,8 @@ export interface SpotifyRefreshAccessTokenResponse {
 	scope: string;
 	expires_in: number;
 }
+
+export interface SpotifyErrorResponse {
+	error: string;
+	error_description: string;
+}

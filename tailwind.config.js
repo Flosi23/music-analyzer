@@ -1,7 +1,7 @@
 import daisyui from "daisyui";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
-/** @type {import('tailwindcss').Config} */
+/** @type {import("tailwindcss").Config} */
 module.exports = {
 	content: [
 		"./src/app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -39,6 +39,10 @@ module.exports = {
 				"surface-container":
 					"rgb(var(--surface-container) / <alpha-value>)",
 				"on-surface": "rgb(var(--on-surface) / <alpha-value>)",
+				"error-container":
+					"rgb(var(--error-container) / <alpha-value>)",
+				"on-error-container":
+					"rgb(var(--on-error-container) / <alpha-value>)",
 			},
 		},
 	},

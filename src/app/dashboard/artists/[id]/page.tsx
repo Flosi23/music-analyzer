@@ -7,21 +7,26 @@ import TextTitle from "@components/text/TextTitle";
 import Link from "next/link";
 import Card from "@components/atoms/Card";
 import CoverImage from "@components/atoms/CoverImage";
+import PageWrapper from "@components/templates/PageWrapper";
 
 interface Params {
 	id: string;
 }
 
 export default function Page({ params }: { params: Params }) {
-	const { data } = useGetRequest<SpotifyGetArtistResponse>(
-		`/api/spotify/artist/${params.id}`,
-		{
-			caching: true,
-		},
-	);
+	const { error, errorMessage, loading, data } =
+		useGetRequest<SpotifyGetArtistResponse>(
+			`/api/spotify/artist/${params.id}`,
+			{
+				caching: true,
+			},
+		);
 
 	return (
-		<>
+		<PageWrapper
+			error={error}
+			errorMessage={errorMessage}
+			loading={!data || loading}>
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 				<div className="flex flex-col gap-6">
 					<TextHeading size="medium">{data?.name}</TextHeading>
@@ -39,7 +44,7 @@ export default function Page({ params }: { params: Params }) {
 							</TextTitle>
 							<div className="grid grid-cols-3 gap-4">
 								{data?.relatedArtists
-									.slice(
+									?.slice(
 										0,
 										Math.min(
 											3,
@@ -75,7 +80,7 @@ export default function Page({ params }: { params: Params }) {
 					<TextHeading size="medium">Top Songs</TextHeading>
 					<div className="grid grid-cols-2 gap-4 self-start">
 						{data?.topSongs
-							.slice(0, Math.min(4, data?.topSongs.length))
+							?.slice(0, Math.min(4, data?.topSongs.length))
 							.map((track) => (
 								<Link
 									key={track.id}
@@ -97,6 +102,6 @@ export default function Page({ params }: { params: Params }) {
 					</div>
 				</div>
 			</div>
-		</>
+		</PageWrapper>
 	);
 }

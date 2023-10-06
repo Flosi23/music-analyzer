@@ -12,6 +12,8 @@ import SelectTimeRange, {
 	defaultTimeRange,
 	TimeRange,
 } from "@components/molecules/SelectTimeRange";
+import Error from "@components/atoms/Error";
+import PageWrapper from "@components/templates/PageWrapper";
 
 export default function Page() {
 	const session = useSession();
@@ -21,7 +23,9 @@ export default function Page() {
 	const [timeRange, setTimeRange] = useState<TimeRange>(defaultTimeRange);
 
 	const {
-		loading: topTracksLoading,
+		loading: loadingTopTracks,
+		error: errorTopTracks,
+		errorMessage: errorMessageTopTracks,
 		data: topTracks,
 		send: sendTracksReq,
 	} = useGetRequest<SpotifyGetCurrentUsersTopTracksResponse>(
@@ -33,7 +37,9 @@ export default function Page() {
 	);
 
 	const {
-		loading: topArtistsLoading,
+		loading: loadingTopArtists,
+		error: errorTopArtists,
+		errorMessage: errorMessageTopArtists,
 		data: topArtists,
 		send: sendArtistsReq,
 	} = useGetRequest<SpotifyGetCurrentUsersTopArtistsResponse>(
@@ -49,8 +55,22 @@ export default function Page() {
 		sendTracksReq();
 	}, [timeRange]);
 
+	if (errorTopArtists || errorTopTracks) {
+		return (
+			<Error message={errorMessageTopArtists || errorMessageTopTracks} />
+		);
+	}
+
 	return (
-		<>
+		<PageWrapper
+			error={errorTopArtists || errorTopTracks}
+			errorMessage={errorMessageTopArtists || errorMessageTopTracks}
+			loading={
+				!topTracks ||
+				!topArtists ||
+				loadingTopTracks ||
+				loadingTopArtists
+			}>
 			<div className="flex justify-between items-center mb-8">
 				<TextDisplay size="small" className="w-min sm:w-fit">
 					Hey, @{session.data?.user?.name}
@@ -75,7 +95,7 @@ export default function Page() {
 					}}
 				/>
 			</div>
-		</>
+		</PageWrapper>
 	);
 }
 
