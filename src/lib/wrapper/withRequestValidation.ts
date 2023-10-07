@@ -47,7 +47,7 @@ function extractRequestParametersFromRequest(
 function urlSearchParamsToObject(urlSearchParams: URLSearchParams): any {
 	const result: Record<string, any> = {};
 	for (const [key, value] of urlSearchParams.entries()) {
-		const asInt = parseInt(value, 10);
+		const asInt = Number(value);
 		if (isNaN(asInt)) {
 			result[key] = value;
 			continue;

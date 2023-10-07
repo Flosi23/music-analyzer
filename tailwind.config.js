@@ -1,4 +1,3 @@
-import daisyui from "daisyui";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
 /** @type {import("tailwindcss").Config} */
@@ -16,7 +15,6 @@ module.exports = {
 			fontSize: {
 				"10xl": "10rem",
 			},
-			plugins: [daisyui],
 			colors: {
 				white: "rgb(var(--white) / <alpha-value>)",
 				black: "rgb(var(--black) / <alpha-value>)",
