@@ -1,11 +1,11 @@
 import { ZodSchema } from "zod";
 import { getServerSession, Session } from "next-auth";
-import { AppRouteHandlerFn } from "next/dist/server/future/route-modules/app-route/module";
 import { authOptions } from "@app/api/auth/[...nextauth]/route";
 import { NextResponse } from "next/server";
 import withRequestValidation, {
 	WithRequestValidationCallback,
 } from "@lib/wrapper/withRequestValidation";
+import { RouteHandlerFn } from "@lib/wrapper/types";
 
 export type WithAuthCallback<T extends ZodSchema> = (
 	req: Parameters<WithRequestValidationCallback<T>>[0],
@@ -16,7 +16,7 @@ export type WithAuthCallback<T extends ZodSchema> = (
 export default function withAuth<T extends ZodSchema>(
 	callback: WithAuthCallback<T>,
 	zodSchema?: T,
-): AppRouteHandlerFn {
+): RouteHandlerFn {
 	return withRequestValidation<T>(async (req, params) => {
 		const session = await getServerSession(authOptions);
 

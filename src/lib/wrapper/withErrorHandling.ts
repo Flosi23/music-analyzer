@@ -1,9 +1,9 @@
-import { AppRouteHandlerFn } from "next/dist/server/future/route-modules/app-route/module";
 import { NextResponse } from "next/server";
+import { RouteHandlerFn } from "@lib/wrapper/types";
 
 export default function withErrorHandling(
-	callback: AppRouteHandlerFn,
-): AppRouteHandlerFn {
+	callback: RouteHandlerFn,
+): RouteHandlerFn {
 	return async function (req, ctx) {
 		try {
 			return await callback(req, ctx);

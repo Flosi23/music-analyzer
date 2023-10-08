@@ -19,7 +19,9 @@ export default function Page() {
 					<ShadowButton
 						text={"Sign in with Spotify"}
 						onClick={() => {
-							signIn(undefined, { callbackUrl: "/dashboard" });
+							signIn(undefined, {
+								callbackUrl: "/dashboard/spotify",
+							});
 						}}></ShadowButton>
 				</div>
 			</div>

@@ -82,7 +82,7 @@ export default function Page() {
 					title={"Top Songs"}
 					items={tracksToOverviewItems(topTracks?.items)}
 					fullOverview={{
-						link: "/dashboard/songs",
+						link: "/dashboard/spotify/stats/top/songs",
 						text: "View your top 50 songs",
 					}}
 				/>
@@ -90,7 +90,7 @@ export default function Page() {
 					title={"Top Artists"}
 					items={artistsToOverviewItems(topArtists?.items)}
 					fullOverview={{
-						link: "/dashboard/artists",
+						link: "/dashboard/spotify/stats/top/artists",
 						text: "View your top 50 artists",
 					}}
 				/>
@@ -105,7 +105,7 @@ function tracksToOverviewItems(tracks?: TrackObject[]) {
 			id: track.id,
 			text: getDisplayString(track),
 			image: track.album?.images[0].url,
-			link: `/dashboard/songs/${track.id}`,
+			link: `/dashboard/spotify/songs/${track.id}`,
 		};
 	});
 }
@@ -116,7 +116,7 @@ function artistsToOverviewItems(artists?: ArtistObject[]) {
 			id: artist.id,
 			text: artist.name,
 			image: artist.images ? artist.images[0].url : undefined,
-			link: `/dashboard/artists/${artist.id}`,
+			link: `/dashboard/spotify/artists/${artist.id}`,
 		};
 	});
 }

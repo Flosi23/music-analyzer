@@ -14,7 +14,7 @@ export default function ShadowBox({
 }: PropsWithChildren<Props>) {
 	return (
 		<div
-			className={`${color} rounded-xl ${className}`}
+			className={`${color} rounded-3xl ${className}`}
 			style={{
 				marginRight: `${size}rem`,
 				marginBottom: `${size}rem`,

@@ -42,7 +42,7 @@ export default function Select<T>({
 					/>
 				</div>
 				{open && (
-					<div className="absolute z-10 shadow-2xl w-max bg-white rounded-lg top-full mt-2 right-0 p-2">
+					<div className="absolute z-10 shadow-2xl w-max bg-white rounded-xl top-full mt-2 right-0 p-2">
 						{options.map(({ value, name }) => (
 							<div
 								key={`${value}`}

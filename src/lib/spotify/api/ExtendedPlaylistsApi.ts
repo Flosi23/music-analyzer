@@ -11,7 +11,6 @@ export default class ExtendedPlaylistsApi extends PlaylistsApi {
 		const tracks: PlaylistTrackObject[] = [];
 
 		for (const id of playlistIds) {
-			console.log("id", id);
 			const playlistItems = await this.getPlaylistsTracksAll(id);
 			tracks.push(...playlistItems);
 		}

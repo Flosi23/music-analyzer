@@ -25,11 +25,8 @@ export default function NavBar() {
 
 	return (
 		<div className="w-full py-4 flex justify-between items-center text-on-surface">
-			<Link href="/dashboard" className="flex gap-5 items-center">
-				<img
-					className="h-16"
-					src="https://dev.music-analyser.codeclub.check24.fun/Logo3.png"
-				/>
+			<Link href="/dashboard/spotify" className="flex gap-5 items-center">
+				<img className="h-16" src="/logo.png" />
 				<TextTitle size="small" className="leading-7 h-fit">
 					Music <br /> Analy_er
 				</TextTitle>

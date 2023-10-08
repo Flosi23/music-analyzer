@@ -69,7 +69,7 @@ export default function Page({ params }: { params: Params }) {
 					.map((artist) => (
 						<Link
 							key={artist.id}
-							href={`/dashboard/artists/${artist.id}`}>
+							href={`/dashboard/spotify/artists/${artist.id}`}>
 							<Card className="h-full flex items-center justify-between gap-4">
 								<TextTitle size="medium">
 									{artist.name}

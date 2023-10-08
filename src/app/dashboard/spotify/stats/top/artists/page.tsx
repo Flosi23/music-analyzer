@@ -6,17 +6,16 @@ import SelectTimeRange, {
 	TimeRange,
 } from "@components/molecules/SelectTimeRange";
 import { useGetRequest } from "@lib/request/clientRequest";
-import { SpotifyGetCurrentUsersTopTracksResponse } from "@app/api/spotify/me/top/tracks/route";
 import TopItems from "@components/templates/TopItems";
-import { getDisplayString } from "@lib/spotify/util";
+import { SpotifyGetCurrentUsersTopArtistsResponse } from "@app/api/spotify/me/top/artists/route";
 import PageWrapper from "@components/templates/PageWrapper";
 
 export default function Page() {
 	const [timeRange, setTimeRange] = useState<TimeRange>(defaultTimeRange);
 
 	const { error, errorMessage, loading, data, send } =
-		useGetRequest<SpotifyGetCurrentUsersTopTracksResponse>(
-			`/api/spotify/me/top/tracks?limit=50&timeRange=${timeRange}`,
+		useGetRequest<SpotifyGetCurrentUsersTopArtistsResponse>(
+			`/api/spotify/me/top/artists?limit=50&timeRange=${timeRange}`,
 			{
 				dispatchImmediately: false,
 				caching: true,
@@ -33,22 +32,22 @@ export default function Page() {
 			errorMessage={errorMessage}
 			loading={!data || loading}>
 			<div className="flex justify-between items-center w-full">
-				<TextHeading size="medium">Your top songs</TextHeading>
+				<TextHeading size="medium">Your top artists</TextHeading>
 				<SelectTimeRange onSelect={setTimeRange} />
 			</div>
-			<TopItems items={topTrackToItems(data) ?? []} />
+			<TopItems items={topArtistsToItems(data) ?? []} />
 		</PageWrapper>
 	);
 }
 
-function topTrackToItems(
-	topTracks: SpotifyGetCurrentUsersTopTracksResponse | undefined,
+function topArtistsToItems(
+	topArtists: SpotifyGetCurrentUsersTopArtistsResponse | undefined,
 ) {
-	return topTracks?.items?.map((track) => {
+	return topArtists?.items?.map((artist) => {
 		return {
-			link: `/dashboard/songs/${track.id}`,
-			text: getDisplayString(track),
-			image: track.album?.images[0].url,
+			link: `/dashboard/spotify/artists/${artist.id}`,
+			text: artist.name,
+			image: artist.images ? artist.images[0].url : "",
 		};
 	});
 }

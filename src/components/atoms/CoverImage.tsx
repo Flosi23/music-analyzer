@@ -27,7 +27,7 @@ export default function CoverImage({
 			color={shadowColor}
 			className={`${color} ${padding} ${className}`}>
 			<img
-				className={`rounded-xl ${imageHeight}`}
+				className={`rounded-3xl ${imageHeight}`}
 				src={image}
 				alt="cover"
 			/>

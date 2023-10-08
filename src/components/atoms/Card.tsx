@@ -13,7 +13,7 @@ export default function Card({
 	textColor = "text-on-primary-container",
 }: PropsWithChildren<Props>) {
 	return (
-		<div className={`p-5 rounded-xl ${color} ${textColor} ${className}`}>
+		<div className={`p-5 rounded-3xl ${color} ${textColor} ${className}`}>
 			{children}
 		</div>
 	);

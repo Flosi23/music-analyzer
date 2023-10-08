@@ -2,6 +2,7 @@ import { z, ZodSchema } from "zod";
 import withErrorHandling from "@lib/wrapper/withErrorHandling";
 import { NextRequest, NextResponse } from "next/server";
 import { AppRouteHandlerFn } from "next/dist/server/future/route-modules/app-route/module";
+import { RouteHandlerFn } from "@lib/wrapper/types";
 
 export type WithRequestValidationCallback<T extends ZodSchema> = (
 	req: Parameters<AppRouteHandlerFn>[0],
@@ -15,7 +16,7 @@ export default function withRequestValidation<
 >(
 	callback: WithRequestValidationCallback<T>,
 	zodSchema: ZodSchema = emptyZodSchema,
-) {
+): RouteHandlerFn {
 	return withErrorHandling(async (req, ctx) => {
 		const rawInput = {
 			...ctx.params,

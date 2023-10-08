@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { AppRouteHandlerFn } from "next/dist/server/future/route-modules/app-route/module";
 import { Session } from "next-auth";
 import SpotifyClient from "@lib/spotify";
 import { ZodSchema } from "zod";
 import withAuth, { WithAuthCallback } from "@lib/wrapper/withAuth";
+import { RouteHandlerFn } from "@lib/wrapper/types";
 
 type WithSpotifyAuthCallback<T extends ZodSchema> = (
 	req: Parameters<WithAuthCallback<T>>[0],
@@ -14,7 +14,7 @@ type WithSpotifyAuthCallback<T extends ZodSchema> = (
 export function withSpotifyAuth<T extends ZodSchema>(
 	callback: WithSpotifyAuthCallback<T>,
 	zodSchema?: T,
-): AppRouteHandlerFn {
+): RouteHandlerFn {
 	return withAuth<T>((req: NextRequest, params, session: Session) => {
 		const spotifyAccount = session.accounts.find(
 			(account) => account.provider === "spotify",

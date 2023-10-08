@@ -54,7 +54,7 @@ export default function Page({ params }: { params: Params }) {
 									.map((artist) => (
 										<Link
 											key={artist.id}
-											href={`/dashboard/artists/${artist.id}`}>
+											href={`/dashboard/spotify/artists/${artist.id}`}>
 											<Card className="flex flex-col h-full gap-2">
 												<CoverImage
 													padding="p-2"
@@ -84,7 +84,7 @@ export default function Page({ params }: { params: Params }) {
 							.map((track) => (
 								<Link
 									key={track.id}
-									href={`/dashboard/songs/${track.id}`}>
+									href={`/dashboard/spotify/songs/${track.id}`}>
 									<Card className="flex flex-col h-full gap-2">
 										<CoverImage
 											shadow={false}
