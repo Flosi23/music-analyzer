@@ -33,9 +33,12 @@ export default function TopItemCard({
 				<ShadowBox
 					size={rank == 1 ? 1 : 0.5}
 					className="min-w-max"
-					color={"shadow-primary-container-low"}>
+					color={"shadow-primary-container-high"}
+					borderRadius={rank == 1 ? "rounded-2xl" : "rounded-xl"}>
 					<img
-						className={`rounded-lg ${rank == 1 ? "w-52" : "h-24"}`}
+						className={`${
+							rank == 1 ? "rounded-2xl" : "rounded-xl"
+						} ${rank == 1 ? "w-52" : "h-24"}`}
 						src={image}
 						alt=""
 					/>

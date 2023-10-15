@@ -4,6 +4,7 @@ interface Props {
 	size?: number;
 	color?: string;
 	className?: string;
+	borderRadius?: string;
 }
 
 export default function ShadowBox({
@@ -11,10 +12,11 @@ export default function ShadowBox({
 	color = "shadow-on-surface",
 	size = 1,
 	className,
+	borderRadius = "rounded-3xl",
 }: PropsWithChildren<Props>) {
 	return (
 		<div
-			className={`${color} rounded-3xl ${className}`}
+			className={`${color} ${borderRadius} ${className}`}
 			style={{
 				marginRight: `${size}rem`,
 				marginBottom: `${size}rem`,

@@ -4,6 +4,7 @@ interface Props {
 	className?: string;
 	color?: string;
 	textColor?: string;
+	borderRadius?: string;
 }
 
 export default function Card({

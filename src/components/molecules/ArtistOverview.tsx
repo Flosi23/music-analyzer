@@ -22,7 +22,7 @@ export default function ArtistOverview({ image, followers, genres }: Props) {
 				shadowSize={1}
 				image={image}
 				color="bg-white"
-				shadowColor="shadow-primary-container-low"
+				shadowColor="shadow-primary-container-high"
 			/>
 			<div className="ml-6 flex-grow">
 				<TextHeading size="small">

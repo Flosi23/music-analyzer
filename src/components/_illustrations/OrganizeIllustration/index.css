@@ -1,0 +1,16 @@
+.animated-path {
+    stroke-dasharray: 420;
+    animation: dash 10s infinite forwards alternate-reverse;
+}
+
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 420;
+    }
+    15% {
+        stroke-dashoffset: 420;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}

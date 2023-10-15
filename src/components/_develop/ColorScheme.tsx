@@ -2,7 +2,7 @@ import ColorSchemeCard from "@components/_develop/ColorSchemeCard";
 
 export default function ColorScheme() {
 	return (
-		<div className="grid grid-cols-5 gap-4">
+		<div className="grid grid-cols-6 gap-4">
 			<ColorSchemeCard
 				bgColor="bg-primary"
 				textColor="text-on-primary"
@@ -19,14 +19,19 @@ export default function ColorScheme() {
 				name="Primary Container"
 			/>
 			<ColorSchemeCard
-				bgColor="bg-primary-container-low"
+				bgColor="bg-primary-container-high"
 				textColor="text-on-primary-container"
-				name="Primary Container Low"
+				name="Primary Container High"
 			/>
 			<ColorSchemeCard
 				bgColor="bg-on-primary-container"
 				textColor="text-primary-container"
 				name="On Primary Container"
+			/>
+			<ColorSchemeCard
+				bgColor="bg-primary-surface"
+				textColor="text-on-surface"
+				name="Primary Surface"
 			/>
 			<ColorSchemeCard
 				bgColor="bg-secondary"
@@ -48,6 +53,7 @@ export default function ColorScheme() {
 				textColor="text-secondary-container"
 				name="On Secondary Container"
 			/>
+			<div></div>
 			<div></div>
 			<ColorSchemeCard
 				bgColor="bg-surface-dim"

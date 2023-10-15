@@ -45,9 +45,10 @@
 
         --primary: var(--primary-600);
         --on-primary: var(--white);
+        --primary-container-high: var(--primary-300);
         --primary-container: var(--primary-200);
-        --primary-container-low: var(--primary-300);
         --on-primary-container: var(--primary-950);
+        --primary-surface: var(--primary-100);
         --secondary: var(--secondary-600);
         --on-secondary: var(--white);
         --secondary-container: var(--secondary-300);
@@ -62,9 +63,10 @@
         @media (prefers-color-scheme: dark) {
             --primary: var(--primary-600);
             --on-primary: var(--primary-50);
+            --primary-container-high: var(--primary-600);
             --primary-container: var(--primary-500);
-            --primary-container-low: var(--primary-600);
             --on-primary-container: var(--primary-50);
+            --primary-surface: var(--primary-950);
             --secondary: var(--secondary-600);
             --on-secondary: var(--secondary-50);
             --secondary-container: var(--secondary-400);

@@ -26,7 +26,7 @@ export default function OverviewCard({ title, items, fullOverview }: Props) {
 				<ShadowCard
 					shadowSize={1.3}
 					color="bg-white"
-					shadowColor="shadow-primary-container-low"
+					shadowColor="shadow-primary-container-high"
 					textColor="text-black"
 					className="flex justify-between items-center gap-5">
 					<div>

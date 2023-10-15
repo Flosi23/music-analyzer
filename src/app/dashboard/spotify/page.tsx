@@ -22,7 +22,7 @@ export default function Page() {
 					heading="Organize"
 					text="Organize your music library. Group songs by genres, popularity, mood and more"
 					image="/illustrations/organize.svg"
-					link="/dashboard/spotify/stats"
+					link="/dashboard/spotify/organize"
 				/>
 			</div>
 		</>

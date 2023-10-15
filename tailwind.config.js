@@ -20,12 +20,14 @@ module.exports = {
 				black: "rgb(var(--black) / <alpha-value>)",
 				primary: "rgb(var(--primary) / <alpha-value>)",
 				"on-primary": "rgb(var(--on-primary) / <alpha-value>)",
+				"primary-container-high":
+					"rgb(var(--primary-container-high) / <alpha-value>)",
 				"primary-container":
 					"rgb(var(--primary-container) / <alpha-value>)",
-				"primary-container-low":
-					"rgb(var(--primary-container-low) / <alpha-value>)",
 				"on-primary-container":
 					"rgb(var(--on-primary-container) / <alpha-value>)",
+				"primary-surface":
+					"rgb(var(--primary-surface) / <alpha-value>)",
 				secondary: "rgb(var(--secondary) / <alpha-value>)",
 				"on-secondary": "rgb(var(--on-secondary) / <alpha-value>)",
 				"secondary-container":

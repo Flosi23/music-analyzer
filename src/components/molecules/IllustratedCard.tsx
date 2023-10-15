@@ -16,6 +16,8 @@ export default function IllustratedCard({ heading, text, image, link }: Props) {
 	const [translateX, setTranslateX] = useState(0);
 	const cardRef = useRef<HTMLDivElement>(null);
 
+	const MAX_TRANSLATE = 5;
+
 	function onMouseMove(e: MouseEvent) {
 		const card = cardRef.current;
 		if (!card) {
@@ -34,10 +36,8 @@ export default function IllustratedCard({ heading, text, image, link }: Props) {
 		const relativeCenterDistanceY =
 			relativeMouseY / (boundingClientRect.height / 2);
 
-		const maxTransform = 10;
-
-		setTranslateX(relativeCenterDistanceX * maxTransform);
-		setTranslateY(relativeCenterDistanceY * maxTransform);
+		setTranslateX(relativeCenterDistanceX * MAX_TRANSLATE);
+		setTranslateY(relativeCenterDistanceY * MAX_TRANSLATE);
 	}
 
 	const card = (
@@ -46,8 +46,8 @@ export default function IllustratedCard({ heading, text, image, link }: Props) {
 				<div
 					className="top-0 bottom-0 left-0 right-0 absolute bg-center opacity-10 bg-on-primary-container"
 					style={{
-						width: "110%",
-						height: "110%",
+						width: `${100 + MAX_TRANSLATE}%`,
+						height: `${100 + MAX_TRANSLATE}%`,
 						maskImage: `url("${image}")`,
 						maskPosition: "center",
 						transform: `translateX(${translateX}%) translateY(${translateY}%)`,

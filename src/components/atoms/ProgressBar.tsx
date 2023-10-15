@@ -15,7 +15,7 @@ export default function ProgressBar({
 
 	return (
 		<div
-			className={`flex rounded-lg mt-1 overflow-hidden bg-primary-container-low w-full h-4 ${className}`}>
+			className={`flex rounded-lg mt-1 overflow-hidden bg-primary-container-high w-full h-4 ${className}`}>
 			<div
 				style={{ width: `${progressInPercent}%` }}
 				className="bg-white rounded-lg"

@@ -8,6 +8,7 @@ interface Props {
 	color?: string;
 	textColor?: string;
 	className?: string;
+	borderRadius?: string;
 }
 
 export default function ShadowCard({
