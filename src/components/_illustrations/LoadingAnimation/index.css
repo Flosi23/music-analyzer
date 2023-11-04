@@ -1,0 +1,153 @@
+.li-container {
+    --height: 30vw;
+    --ratio: 1.125;
+    --width: calc(var(--ratio) * var(--height));
+
+    --server-height: .23;
+    --connection-height: .49;
+    --song-card-height: .28;
+
+    --song-card-animation-length: 5s;
+    --connection-dot-width: .1;
+
+    margin: auto;
+    width: var(--width);
+    height: var(--height);
+}
+
+.li-server {
+    height: calc(var(--server-height) * 100%);
+    font-size: calc(var(--server-height) * var(--height) * 0.18);
+    left: 50%;
+    gap: 3%;
+}
+
+.li-server-icon {
+    height: 100%;
+}
+
+.li-server h1 {
+    font-size: 2.7em;
+    font-weight: bolder;
+}
+
+.li-connection {
+    height: calc(var(--connection-height) * 100%);
+    width: 100%;
+    padding-bottom: 4%;
+}
+
+.li-connection-dot {
+    width: calc(var(--connection-dot-width) * var(--height));
+    height: calc(var(--connection-dot-width) * var(--height));
+    border-radius: 100%;
+    background: rgb(var(--primary-surface));
+}
+
+.li-connection-animate {
+    position: absolute;
+    top: 0;
+    width: calc(var(--connection-dot-width) * var(--height));
+    height: calc(var(--connection-dot-width) * var(--height));
+    animation: connection var(--song-card-animation-length) infinite;
+}
+
+.li-song-card {
+    gap: 5%;
+    padding: 0 7%;
+    width: 100%;
+    height: calc(var(--song-card-height) * 100%);
+    font-size: calc(var(--song-card-height) * var(--height) * 0.18);
+    animation: song-card var(--song-card-animation-length) infinite;
+}
+
+.li-song-card-left {
+    opacity: 0;
+    height: 100%;
+    animation: song-card-left var(--song-card-animation-length) infinite;
+}
+
+.li-song-card-right {
+    animation: song-card-right var(--song-card-animation-length) infinite;
+}
+
+.li-song-card h1 {
+    font-size: 1.5em;
+    line-height: 1;
+}
+
+.li-song-card-icon {
+    height: 60%;
+}
+
+@keyframes connection {
+    10% {
+        top: 0;
+        height: 100%;
+    }
+    30% {
+        top: 100%;
+        height: calc(var(--connection-dot-width) * var(--height));
+    }
+    100% {
+        top: 100%;
+    }
+}
+
+@keyframes song-card-left {
+    40% {
+        opacity: 0;
+        transform: translateY(-60%);
+    }
+    60% {
+        opacity: 100%;
+        transform: translateY(0%);
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+
+@keyframes song-card-right {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+    70% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+    80% {
+        opacity: 100%;
+        transform: translateY(0%);
+    }
+}
+
+@keyframes song-card {
+    0% {
+        width: 0;
+        height: 0;
+    }
+    22% {
+        width: 0;
+        height: 0;
+    }
+    30% {
+        padding: 0;
+        width: calc(var(--connection-dot-width) * var(--height));
+        height: calc(var(--connection-dot-width) * var(--height));
+    }
+    40% {
+        border-radius: 100%;
+        height: calc(var(--song-card-height) * var(--height));
+        width: calc(var(--song-card-height) * var(--height));
+        opacity: 100%;
+        padding: 0 7%;
+    }
+    60% {
+        width: 70%;
+    }
+    100% {
+        width: 100%;
+    }
+}

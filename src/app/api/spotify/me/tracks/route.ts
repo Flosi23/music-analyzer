@@ -14,28 +14,26 @@ import {
 	mapSavedTracksToTracks,
 } from "@app/api/spotify/me/tracks/mapping";
 import { z } from "zod";
+import { DetailedTrackObject } from "@app/api/spotify/me/tracks/types";
 
 const requestParamsSchema = z.object({
-	source: z.enum(["liked_songs", "playlists", "both"]).default("both"),
+	includeLikedSongs: z.coerce.boolean(),
 	playlistIds: z.string().optional(),
 });
 
-export const GET = withSpotifyAuth(async (_req, _params, spotifyClient) => {
+export type SpotifyGetCurrentUsersTracksResponse = DetailedTrackObject[];
+
+export const GET = withSpotifyAuth(async (_req, params, spotifyClient) => {
 	let savedTracks: SavedTrackObject[] = [];
 	let playlistTracks: PlaylistTrackObject[] = [];
 
-	if (_params.source !== "playlists") {
+	if (params.includeLikedSongs) {
 		savedTracks = await spotifyClient.tracks.getUsersSavedTracksAll();
 	}
 
-	if (_params.source !== "liked_songs" && !_params.playlistIds) {
-		playlistTracks =
-			await spotifyClient.playlists.getUsersPlaylistsTracksAll();
-	}
-
-	if (_params.source !== "liked_songs" && _params.playlistIds) {
+	if (params.playlistIds) {
 		playlistTracks = await spotifyClient.playlists.getUsersPlaylistsTracks(
-			_params.playlistIds.split(","),
+			params.playlistIds.split(","),
 		);
 	}
 
@@ -58,7 +56,9 @@ export const GET = withSpotifyAuth(async (_req, _params, spotifyClient) => {
 		audioFeatures,
 	);
 
-	return NextResponse.json({ tracks: detailedTracks });
+	return NextResponse.json<SpotifyGetCurrentUsersTracksResponse>(
+		detailedTracks,
+	);
 }, requestParamsSchema);
 
 async function fetchArtists(

@@ -9,6 +9,7 @@ interface Props {
 export default function Button({
 	children,
 	onClick,
+
 	className,
 }: PropsWithChildren<Props>) {
 	return (

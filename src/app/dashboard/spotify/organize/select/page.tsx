@@ -13,6 +13,7 @@ import { useState } from "react";
 import Button from "@components/atoms/Button";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import SegmentedSelection from "@components/molecules/SegmentedSelection";
+import Link from "next/link";
 
 export default function Page() {
 	const {
@@ -78,12 +79,18 @@ export default function Page() {
 						defaultOption={true}
 						onSelect={setIncludeLikedSongs}
 					/>
-					<Button onClick={() => {}} className="mt-8 w-full">
-						<div className="flex items-center gap-2">
-							Continue
-							<ArrowRightIcon className="w-5 h-5" />
-						</div>
-					</Button>
+					<Link
+						href={`/dashboard/spotify/organize/compute?${selectionToQueryParameters(
+							includeLikedSongs,
+							selectedPlaylists ?? [],
+						).toString()}`}>
+						<Button onClick={() => {}} className="mt-8 w-full">
+							<div className="flex items-center gap-2">
+								Continue
+								<ArrowRightIcon className="w-5 h-5" />
+							</div>
+						</Button>
+					</Link>
 				</div>
 				<div className="w-2/3">
 					<PageWrapper
@@ -102,6 +109,19 @@ export default function Page() {
 			</div>
 		</>
 	);
+}
+
+function selectionToQueryParameters(
+	includeLikedSongs: boolean,
+	selectedPlaylists: SelectPlaylistPlaylist[],
+): URLSearchParams {
+	const urlSearchParams = new URLSearchParams();
+	urlSearchParams.set("includeLikedSongs", `${includeLikedSongs}`);
+	urlSearchParams.set(
+		"playlistIds",
+		selectedPlaylists.map((p) => p.id).join(","),
+	);
+	return urlSearchParams;
 }
 
 function mapSpotifyPlaylistToSelectionPlaylist(
