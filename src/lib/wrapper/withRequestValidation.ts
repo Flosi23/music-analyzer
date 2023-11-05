@@ -49,11 +49,21 @@ function urlSearchParamsToObject(urlSearchParams: URLSearchParams): any {
 	const result: Record<string, any> = {};
 	for (const [key, value] of urlSearchParams.entries()) {
 		const asInt = Number(value);
-		if (isNaN(asInt)) {
-			result[key] = value;
+		if (!isNaN(asInt)) {
+			result[key] = asInt;
 			continue;
 		}
-		result[key] = asInt;
+
+		if (value === "true") {
+			result[key] = true;
+			continue;
+		}
+		if (value === "false") {
+			result[key] = false;
+			continue;
+		}
+
+		result[key] = value;
 	}
 	return result;
 }

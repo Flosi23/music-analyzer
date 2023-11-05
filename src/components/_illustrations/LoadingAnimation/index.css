@@ -5,9 +5,10 @@
 
     --server-height: .23;
     --connection-height: .49;
-    --song-card-height: .28;
+    --song-card-height: calc(.28 * var(--height));
+    --song-card-width: calc(1 * var(--width));
 
-    --song-card-animation-length: 5s;
+    --animation-duration: 5s;
     --connection-dot-width: .1;
 
     margin: auto;
@@ -49,35 +50,52 @@
     top: 0;
     width: calc(var(--connection-dot-width) * var(--height));
     height: calc(var(--connection-dot-width) * var(--height));
-    animation: connection var(--song-card-animation-length) infinite;
+    animation: connection var(--animation-duration) infinite;
 }
 
 .li-song-card {
     gap: 5%;
     padding: 0 7%;
-    width: 100%;
-    height: calc(var(--song-card-height) * 100%);
-    font-size: calc(var(--song-card-height) * var(--height) * 0.18);
-    animation: song-card var(--song-card-animation-length) infinite;
+    width: var(--song-card-width);
+    height: var(--song-card-height);
+    font-size: calc(var(--song-card-height) * 0.18);
+    animation: song-card var(--animation-duration) infinite;
 }
 
 .li-song-card-left {
     opacity: 0;
     height: 100%;
-    animation: song-card-left var(--song-card-animation-length) infinite;
+    animation: song-card-left var(--animation-duration) infinite;
 }
 
-.li-song-card-right {
-    animation: song-card-right var(--song-card-animation-length) infinite;
+.li-song-card-left-icon {
+    flex-grow: 1;
+    display: flex;
 }
 
-.li-song-card h1 {
+.li-song-card-left-text {
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: calc(var(--song-card-width) * 0.5);
+}
+
+.li-song-card-left-text h1, p {
+    width: 100%;
+}
+
+.li-song-card-left-text h1 {
     font-size: 1.5em;
     line-height: 1;
 }
 
+.li-song-card-right {
+    animation: song-card-right var(--animation-duration) infinite;
+    width: 25%;
+}
+
 .li-song-card-icon {
     height: 60%;
+    min-width: calc(var(--song-card-height) * 0.6);
 }
 
 @keyframes connection {
@@ -139,8 +157,8 @@
     }
     40% {
         border-radius: 100%;
-        height: calc(var(--song-card-height) * var(--height));
-        width: calc(var(--song-card-height) * var(--height));
+        height: var(--song-card-height);
+        width: var(--song-card-height);
         opacity: 100%;
         padding: 0 7%;
     }

@@ -2,6 +2,7 @@ import { withSpotifyAuth } from "@lib/wrapper/withSpotifyAuth";
 import { z } from "zod";
 import { TrackObject } from "@lib/spotify/generated";
 import { NextResponse } from "next/server";
+import { shuffle } from "@lib/helper";
 
 const requestParamsSchema = z.object({
 	includeLikedSongs: z.coerce.boolean(),
@@ -12,8 +13,6 @@ const requestParamsSchema = z.object({
 export type SpotifyGetCurrentUsersTracksSampleResponse = TrackObject[];
 export const GET = withSpotifyAuth(async (_req, params, spotifyClient) => {
 	let tracks: TrackObject[] = [];
-
-	console.log("params", params);
 
 	if (params.includeLikedSongs) {
 		const savedTracks = await spotifyClient.tracks.getUsersSavedTracksAll(
@@ -38,6 +37,6 @@ export const GET = withSpotifyAuth(async (_req, params, spotifyClient) => {
 	}
 
 	return NextResponse.json<SpotifyGetCurrentUsersTracksSampleResponse>(
-		tracks,
+		shuffle(tracks),
 	);
 }, requestParamsSchema);

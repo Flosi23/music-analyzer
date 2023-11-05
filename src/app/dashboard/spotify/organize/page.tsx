@@ -40,7 +40,7 @@ export default function Page() {
 					className="w-full hidden lg:block"
 				/>
 			</div>
-			<Link href="/dashboard/spotify/organize/select">
+			<Link href="/dashboard/spotify/organize/process">
 				<ShadowButton onClick={() => {}} className="mt-4">
 					<TextTitle size={"medium"}>Start organizing</TextTitle>
 				</ShadowButton>
