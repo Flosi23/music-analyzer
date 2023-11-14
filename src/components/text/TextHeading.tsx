@@ -1,5 +1,5 @@
-import { TypographyProps } from "@components/text/common";
-import { PropsWithChildren } from "react";
+import Text, {TypographyProps} from "@components/text/Text";
+import {PropsWithChildren} from "react";
 
 /**
  * Headlines are best-suited for short, high-emphasis text
@@ -7,23 +7,22 @@ import { PropsWithChildren } from "react";
  * These styles can be good for marking primary passages
  * of text or important regions of content.
  */
+
 export default function TextHeading({
-	size,
-	className,
-	children,
 	bold = true,
+	...props
 }: PropsWithChildren<TypographyProps>) {
 	return (
-		<div
-			className={`${mapTextSize(size)} ${
-				bold ? "font-bold" : "font-normal"
-			} ${className}`}>
-			{children}
-		</div>
+		<Text
+			mapSizeToTextSize={mapSizeToTextSize}
+			boldness={"font-bold"}
+			bold={bold}
+			{...props}
+		/>
 	);
 }
 
-function mapTextSize(size: TypographyProps["size"]) {
+function mapSizeToTextSize(size: TypographyProps["size"]) {
 	switch (size) {
 		case "small":
 			return "text-5xl";

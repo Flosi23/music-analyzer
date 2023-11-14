@@ -1,27 +1,25 @@
-import { TypographyProps } from "@components/text/common";
-import { PropsWithChildren } from "react";
+import {PropsWithChildren} from "react";
+import Text, {TypographyProps} from "@components/text/Text";
 
 /**
  * As the largest text on the screen, display styles are reserved for short,
  * important text or numerals.
  */
 export default function TextDisplay({
-	size,
-	children,
-	className,
 	bold = true,
+	...props
 }: PropsWithChildren<TypographyProps>) {
 	return (
-		<div
-			className={`${mapTextSize(size)} ${
-				bold ? "font-extrabold" : "font-normal"
-			} ${className}`}>
-			{children}
-		</div>
+		<Text
+			mapSizeToTextSize={mapSizeToTextSize}
+			boldness={"font-extrabold"}
+			bold={bold}
+			{...props}
+		/>
 	);
 }
 
-function mapTextSize(size: TypographyProps["size"]) {
+function mapSizeToTextSize(size: TypographyProps["size"]) {
 	switch (size) {
 		case "small":
 			return "text-7xl lg:text-8xl";

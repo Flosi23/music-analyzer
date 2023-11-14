@@ -1,5 +1,5 @@
-import { TypographyProps } from "@components/text/common";
-import { PropsWithChildren } from "react";
+import {PropsWithChildren} from "react";
+import Text, {TypographyProps} from "@components/text/Text";
 
 /**
  * Label styles are smaller, utilitarian styles,
@@ -7,23 +7,17 @@ import { PropsWithChildren } from "react";
  * or for very small text in the content body,
  * such as captions.
  */
-export default function TextLabel({
-	size,
-	children,
-	className,
-	bold = false,
-}: PropsWithChildren<TypographyProps>) {
+export default function TextLabel(props: PropsWithChildren<TypographyProps>) {
 	return (
-		<div
-			className={`${mapTextSize(size)} ${
-				bold ? "font-bold" : "font-normal"
-			} ${className}`}>
-			{children}
-		</div>
+		<Text
+			mapSizeToTextSize={mapSizeToTextSize}
+			boldness={"font-bold"}
+			{...props}
+		/>
 	);
 }
 
-function mapTextSize(size: TypographyProps["size"]) {
+function mapSizeToTextSize(size: TypographyProps["size"]) {
 	switch (size) {
 		case "small":
 			return "text-sm";

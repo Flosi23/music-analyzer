@@ -1,5 +1,5 @@
-import { TypographyProps } from "@components/text/common";
-import { PropsWithChildren } from "react";
+import {PropsWithChildren} from "react";
+import Text, {TypographyProps} from "@components/text/Text";
 
 /**
  * Titles are smaller than headline styles,
@@ -10,22 +10,20 @@ import { PropsWithChildren } from "react";
  * regions of content.
  */
 export default function TextTitle({
-	size,
-	children,
-	className,
 	bold = true,
+	...props
 }: PropsWithChildren<TypographyProps>) {
 	return (
-		<div
-			className={`${mapTextSize(size)} ${
-				bold ? "font-semibold" : "font-normal"
-			} ${className}`}>
-			{children}
-		</div>
+		<Text
+			mapSizeToTextSize={mapSizeToTextSize}
+			boldness={"font-semibold"}
+			bold={bold}
+			{...props}
+		/>
 	);
 }
 
-function mapTextSize(size: TypographyProps["size"]) {
+function mapSizeToTextSize(size: TypographyProps["size"]) {
 	switch (size) {
 		case "small":
 			return "text-2xl";
