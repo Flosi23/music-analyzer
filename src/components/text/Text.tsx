@@ -1,4 +1,9 @@
-import { FormEventHandler, PropsWithChildren } from "react";
+import React, {
+	FormEventHandler,
+	KeyboardEventHandler,
+	PropsWithChildren,
+	useRef,
+} from "react";
 
 export interface TypographyProps {
 	size: "small" | "medium" | "large";
@@ -14,6 +19,7 @@ interface Props extends TypographyProps {
 	boldness: string;
 }
 
+const ENTER_KEY = "Enter";
 export default function Text({
 	mapSizeToTextSize,
 	boldness,
@@ -21,18 +27,36 @@ export default function Text({
 	bold,
 	className,
 	children,
-	contentEditable,
+	contentEditable = false,
 	onChange,
 	onBlur,
 }: PropsWithChildren<Props>) {
+	const div = useRef<HTMLDivElement>(null);
+	const onlyTextChildren = () => {
+		return React.Children.toArray(children).every(
+			(c) => typeof c === "string",
+		);
+	};
+
+	const onKeyDown: KeyboardEventHandler<HTMLDivElement> = (e) => {
+		if (contentEditable && e.key === ENTER_KEY && div.current) {
+			div.current.blur();
+		}
+	};
+
 	return (
 		<div
 			className={`${mapSizeToTextSize(size)} ${
 				bold ? boldness : "font-normal"
 			} ${className}`}
 			onBlur={onBlur}
+			onKeyDown={onKeyDown}
 			onChange={onChange}
-			contentEditable={contentEditable}>
+			contentEditable={contentEditable}
+			suppressContentEditableWarning={
+				contentEditable && onlyTextChildren()
+			}
+			ref={div}>
 			{children}
 		</div>
 	);

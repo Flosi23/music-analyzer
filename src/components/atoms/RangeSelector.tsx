@@ -1,7 +1,6 @@
 "use client";
 import { FormEventHandler, useEffect, useRef, useState } from "react";
 import TextLabel from "@components/text/TextLabel";
-import TextBody from "@components/text/TextBody";
 
 export interface Range {
 	from: number;
@@ -13,12 +12,14 @@ interface Props {
 	maxValue?: number;
 	defaultRange?: Range;
 	label?: string;
+	onChange?: (r: Range) => void;
 }
 
 export default function RangeSelector({
 	minValue = 0,
 	maxValue = 100,
 	defaultRange,
+	onChange,
 	label,
 }: Props) {
 	const slider = useRef<HTMLDivElement>(null);
@@ -40,11 +41,19 @@ export default function RangeSelector({
 	}
 
 	function setFromValue(newValue: number) {
-		_setFromValue(Math.max(Math.min(newValue, toValue), minValue));
+		const newFromValue = Math.max(Math.min(newValue, toValue), minValue);
+		_setFromValue(newFromValue);
+		if (onChange) {
+			onChange({ to: toValue, from: newFromValue });
+		}
 	}
 
 	function setToValue(newValue: number) {
-		_setToValue(Math.min(Math.max(newValue, fromValue), maxValue));
+		const newToValue = Math.min(Math.max(newValue, fromValue), maxValue);
+		_setToValue(newToValue);
+		if (onChange) {
+			onChange({ to: newToValue, from: fromValue });
+		}
 	}
 
 	function moveFromCircle(deltaX: number) {
@@ -56,27 +65,35 @@ export default function RangeSelector({
 	}
 
 	return (
-		<div className="flex flex-col gap-2">
-			{label && <TextBody size={"small"}>{label}</TextBody>}
+		<div className="flex flex-col gap-1">
+			{label && <TextLabel size="large">{label}</TextLabel>}
 			<div
-				className="relative h-2 mt-2 mb-7 w-full rounded-full bg-primary-surface"
+				className="relative mx-4 h-1 mt-2 mb-6 rounded-full bg-primary-surface"
 				ref={slider}>
 				<Circle
 					value={fromValue}
-					left={(fromValue / maxValue) * 100}
+					left={
+						((fromValue - minValue) / (maxValue - minValue)) * 100
+					}
 					mouseMoved={moveFromCircle}
 					onValueManuallyChanged={setFromValue}
 				/>
 				<div
-					className="absolute h-2 bg-primary"
+					className="absolute h-1 bg-primary"
 					style={{
-						left: `${(fromValue / maxValue) * 100}%`,
-						right: `${(1 - toValue / maxValue) * 100}%`,
+						left: `${
+							((fromValue - minValue) / (maxValue - minValue)) *
+							100
+						}%`,
+						right: `${
+							(1 - (toValue - minValue) / (maxValue - minValue)) *
+							100
+						}%`,
 					}}
 				/>
 				<Circle
 					value={toValue}
-					left={(toValue / maxValue) * 100}
+					left={((toValue - minValue) / (maxValue - minValue)) * 100}
 					mouseMoved={moveToCircle}
 					onValueManuallyChanged={setToValue}
 				/>
@@ -113,7 +130,7 @@ function Circle({
 		window.addEventListener("mousemove", onMouseMove);
 		window.addEventListener("click", () => {
 			if (isMoving) {
-				setIsMoving(false);
+				stoppedMoving();
 			}
 		});
 
@@ -130,22 +147,22 @@ function Circle({
 	const onTextChanged: FormEventHandler<HTMLDivElement> = (e) => {
 		const text = e.currentTarget.innerText;
 		onValueManuallyChanged(parseFloat(text));
-		setLastX(undefined);
+		stoppedMoving();
 	};
 
 	return (
 		<div
 			onMouseDown={() => setIsMoving(true)}
 			onMouseUp={stoppedMoving}
-			className="absolute top-1/2 flex flex-col w-6 z-10"
+			className="absolute top-1/2 flex flex-col w-4 z-10"
 			style={{
 				transform: "translateX(-50%) translateY(-50%)",
 				left: `${left}%`,
 			}}>
-			<div className="h-6 rounded-full relative bg-primary cursor-pointer shadow-2xl">
+			<div className="h-4 rounded-full relative bg-primary cursor-pointer shadow-2xl">
 				<div className="top-full w-full absolute flex flex-col justify-center items-center">
 					<TextLabel
-						size="medium"
+						size="small"
 						onBlur={onTextChanged}
 						contentEditable={true}>
 						{value <= 1 ? value.toFixed(2) : value.toFixed(0)}

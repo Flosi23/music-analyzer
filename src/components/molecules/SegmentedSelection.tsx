@@ -28,7 +28,7 @@ export default function SegmentedSelection<T>({
 			{options.map((option) => (
 				<div key={`${option.value}`}>
 					<TextTitle size="small">{option.name}</TextTitle>
-					<TextBody size="medium">{option.description}</TextBody>
+					<TextBody size="small">{option.description}</TextBody>
 				</div>
 			))}
 		</BasicSegmentedSelection>

@@ -1,0 +1,33 @@
+.toggle-button {
+    --toggle-button-transition: .8s cubic-bezier(0.18, 0.89, 0.35, 1.15) all;
+    transition: var(--toggle-button-transition);
+    aspect-ratio: 2 / 1;
+}
+
+.toggle-button-inactive {
+    border-width: 2px;
+    border-color: rgb(var(--on-surface));
+}
+
+.toggle-button-active {
+    border-color: transparent;
+    background: rgb(var(--primary))
+}
+
+.knob {
+    --perc: 5%;
+    top: calc(var(--perc) * 2);
+    bottom: calc(var(--perc) * 2);
+    transition: var(--toggle-button-transition);
+}
+
+.toggle-button-inactive .knob {
+    left: calc(var(--perc));
+    background-color: rgb(var(--on-surface));
+}
+
+.toggle-button-active .knob {
+    left: calc(100% - var(--perc));
+    transform: translateX(-100%);
+    background-color: rgb(var(--primary-surface));
+}
