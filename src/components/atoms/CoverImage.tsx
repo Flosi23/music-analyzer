@@ -8,6 +8,7 @@ interface Props {
 	color?: string;
 	shadowColor?: string;
 	shadowSize?: number;
+	borderRadius?: string;
 	className?: string;
 }
 
@@ -19,15 +20,17 @@ export default function CoverImage({
 	color = "bg-white",
 	shadowSize = 1.5,
 	shadowColor,
+	borderRadius = "rounded-3xl",
 	className,
 }: Props) {
 	return (
 		<ShadowBox
 			size={shadow ? shadowSize : 0}
 			color={shadowColor}
+			borderRadius={borderRadius}
 			className={`${color} ${padding} ${className}`}>
 			<img
-				className={`rounded-3xl ${imageHeight}`}
+				className={`${borderRadius} ${imageHeight}`}
 				src={image}
 				alt="cover"
 			/>

@@ -24,3 +24,13 @@ export function shuffle<T>(array: T[]): T[] {
 	}
 	return array;
 }
+
+/**
+ * Returns true if at least one of the string in the given array contains the search string
+ */
+export function matchSomeString(
+	array: string[] | undefined,
+	search: string,
+): boolean {
+	return array !== undefined && array.some((s) => s.includes(search));
+}

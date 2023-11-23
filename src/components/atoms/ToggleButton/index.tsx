@@ -1,6 +1,6 @@
 import "./index.css";
 import { useState } from "react";
-import TextLabel from "@components/text/TextLabel";
+import TextBody from "@components/text/TextBody";
 
 interface Props {
 	label?: string;
@@ -28,9 +28,9 @@ export default function ToggleButton({
 		<div
 			className={`flex justify-between items-center gap-2 cursor-pointer ${className}`}
 			onClick={onClick}>
-			{label && <TextLabel size="large">{label}</TextLabel>}
+			{label && <TextBody size="medium">{label}</TextBody>}
 			<div
-				className={`toggle-button relative rounded-full w-12 ${
+				className={`toggle-button relative rounded-full w-14 ${
 					state ? "toggle-button-active" : "toggle-button-inactive"
 				}`}>
 				<div className="knob absolute rounded-full aspect-square" />

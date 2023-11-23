@@ -1,5 +1,5 @@
 .toggle-button {
-    --toggle-button-transition: .8s cubic-bezier(0.18, 0.89, 0.35, 1.15) all;
+    --toggle-button-transition: .4s cubic-bezier(0.18, 0.89, 0.35, 1.15) all;
     transition: var(--toggle-button-transition);
     aspect-ratio: 2 / 1;
 }
@@ -15,7 +15,7 @@
 }
 
 .knob {
-    --perc: 5%;
+    --perc: 6%;
     top: calc(var(--perc) * 2);
     bottom: calc(var(--perc) * 2);
     transition: var(--toggle-button-transition);

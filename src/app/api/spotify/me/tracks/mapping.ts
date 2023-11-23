@@ -50,7 +50,7 @@ export function constructDetailedTrackObjects(
 		track.artists = trackArtists;
 
 		return {
-			audioFeature: audioFeature,
+			audioFeatures: audioFeature || {},
 			genres: genres,
 			...track,
 		};

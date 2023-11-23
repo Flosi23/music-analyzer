@@ -9,6 +9,7 @@ import LoadingProgressBar from "@components/molecules/LoadingProgressBar";
 import { Selection } from "@app/dashboard/spotify/organize/process/page";
 import { SpotifyGetCurrentUsersTracksSampleResponse } from "@app/api/spotify/me/tracks/sample/route";
 import { getRandomInt } from "@lib/helper";
+import FilterPage from "@app/dashboard/spotify/organize/process/FilterPage";
 
 interface Props {
 	selection: Selection;
@@ -57,6 +58,10 @@ export default function ComputePage({ selection }: Props) {
 
 	if (error) {
 		return <Error message={errorMessage} />;
+	}
+
+	if (data) {
+		return <FilterPage songs={data} />;
 	}
 
 	return <></>;

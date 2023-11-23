@@ -4,7 +4,7 @@ import { SpotifyGetTrackResponse } from "@app/api/spotify/track/[id]/route";
 import TextHeading from "@components/text/TextHeading";
 import SongInfo from "@components/molecules/SongInfo";
 import Index from "@components/molecules/SongAnalysis";
-import PlayButton from "@components/molecules/PlayButton";
+import PlayButtonCard from "@components/molecules/PlayButtonCard";
 import React from "react";
 import Link from "next/link";
 import Card from "@components/atoms/Card";
@@ -61,7 +61,7 @@ export default function Page({ params }: { params: Params }) {
 				/>
 			</div>
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-				<PlayButton
+				<PlayButtonCard
 					audioSrc={data?.preview_url ? data.preview_url : undefined}
 				/>
 				{data?.artists
