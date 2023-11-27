@@ -9,6 +9,8 @@ import CoverImage from "@components/atoms/CoverImage";
 import TextLabel from "@components/text/TextLabel";
 import Collapsable from "@components/atoms/Collapsable";
 import PlayButton from "@components/atoms/PlayButton";
+import { SpotifyImage } from "next-auth/providers/spotify";
+import { ImageObject } from "@lib/spotify/generated";
 
 interface Props {
 	songs: DetailedTrackObject[];
@@ -42,7 +44,7 @@ export default function FilterPage({ songs }: Props) {
 	console.log(generatedPlaylists);
 
 	return (
-		<div className="grid grid-cols-3 gap-8">
+		<div className="grid grid-cols-3 gap-8 mb-32">
 			<FilterOptionsBuilder onGenerate={onGenerate} />
 			<div className="col-span-2 grid grid-cols-2 gap-4">
 				{generatedPlaylists && (
@@ -94,6 +96,22 @@ interface DisplayPlaylistProps {
 }
 
 function DisplayPlaylist({ playlist }: DisplayPlaylistProps) {
+	const getSmallestImageURL = (
+		images?: ImageObject[],
+	): string | undefined => {
+		return images?.reduce((current, previous) =>
+			current &&
+			current.width &&
+			current.height &&
+			previous.height &&
+			previous.width &&
+			current.height < previous.height &&
+			current.width < previous.width
+				? current
+				: previous,
+		).url;
+	};
+
 	return (
 		<div className="bg-primary-container rounded-3xl">
 			<Collapsable
@@ -112,11 +130,9 @@ function DisplayPlaylist({ playlist }: DisplayPlaylistProps) {
 									borderRadius="rounded-full"
 									className="h-14 w-14 flex-shrink-0"
 									shadow={false}
-									image={
-										song.album?.images
-											? song.album.images[0].url
-											: undefined
-									}
+									image={getSmallestImageURL(
+										song.album?.images,
+									)}
 								/>
 								<div className="flex flex-col flex-grow truncate">
 									<TextLabel
