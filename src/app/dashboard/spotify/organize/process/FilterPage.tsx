@@ -9,7 +9,6 @@ import CoverImage from "@components/atoms/CoverImage";
 import TextLabel from "@components/text/TextLabel";
 import Collapsable from "@components/atoms/Collapsable";
 import PlayButton from "@components/atoms/PlayButton";
-import { SpotifyImage } from "next-auth/providers/spotify";
 import { ImageObject } from "@lib/spotify/generated";
 
 interface Props {

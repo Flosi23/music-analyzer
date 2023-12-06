@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import {
 	ArtistObject,
 	AudioFeaturesObject,
+	GetMultipleArtists200Response,
+	GetSeveralAudioFeatures200Response,
 	PlaylistTrackObject,
 	SavedTrackObject,
 	TrackObject,
@@ -15,6 +17,7 @@ import {
 } from "@app/api/spotify/me/tracks/mapping";
 import { z } from "zod";
 import { DetailedTrackObject } from "@app/api/spotify/me/tracks/types";
+import { AxiosResponse } from "axios";
 
 const requestParamsSchema = z.object({
 	includeLikedSongs: z.coerce.boolean(),
@@ -71,7 +74,9 @@ async function fetchArtists(
 	// remove duplicates
 	const filteredArtistIds = [...new Set(artistIds)];
 
-	const artists: ArtistObject[] = [];
+	const artistsPromises: Promise<
+		AxiosResponse<GetMultipleArtists200Response>
+	>[] = [];
 
 	for (let i = 0; i < filteredArtistIds.length; i += 50) {
 		const chunk = filteredArtistIds.slice(
@@ -79,31 +84,34 @@ async function fetchArtists(
 			Math.min(filteredArtistIds.length, i + 50),
 		);
 
-		const artistsRes = await spotifyClient.artists.getMultipleArtists(
+		const promise = spotifyClient.artists.getMultipleArtists(
 			chunk.join(","),
 		);
 
-		artists.push(...artistsRes.data.artists);
+		artistsPromises.push(promise);
 	}
 
-	return artists;
+	const artists = await Promise.all(artistsPromises);
+	return artists.flatMap((a) => a.data.artists);
 }
 
 async function fetchAudioFeatures(
 	tracks: TrackObject[],
 	spotifyClient: SpotifyClient,
 ): Promise<AudioFeaturesObject[]> {
-	const audioFeatures: AudioFeaturesObject[] = [];
+	const audioFeaturesPromises: Promise<
+		AxiosResponse<GetSeveralAudioFeatures200Response>
+	>[] = [];
 
 	for (let i = 0; i < tracks.length; i += 100) {
 		const chunk = tracks.slice(i, Math.min(tracks.length, i + 100));
 		const ids = chunk.map((track) => track.id!).join(",");
 
-		const audioFeaturesRes =
-			await spotifyClient.tracks.getSeveralAudioFeatures(ids);
+		const promise = spotifyClient.tracks.getSeveralAudioFeatures(ids);
 
-		audioFeatures.push(...audioFeaturesRes.data.audio_features);
+		audioFeaturesPromises.push(promise);
 	}
 
-	return audioFeatures;
+	const audioFeatures = await Promise.all(audioFeaturesPromises);
+	return audioFeatures.flatMap((a) => a.data.audio_features);
 }

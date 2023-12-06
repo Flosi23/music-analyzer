@@ -43,9 +43,10 @@ export function constructDetailedTrackObjects(
 					(trackArtist) => trackArtist.id === artist.id,
 				),
 		);
-		const genres = trackArtists
-			?.flatMap((artist) => artist.genres)
-			.filter((genre): genre is string => genre !== undefined);
+		const genres =
+			trackArtists && trackArtists.length > 0
+				? trackArtists[0].genres || []
+				: [];
 
 		track.artists = trackArtists;
 

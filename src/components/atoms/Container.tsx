@@ -10,7 +10,7 @@ export default function Container({
 }: PropsWithChildren<Props>) {
 	return (
 		<div
-			className={`mx-4 md:mx-20 lg:mx-20 xl:mx-32 2xl:mx-72 ${className}`}>
+			className={`mx-4 md:mx-20 lg:mx-20 xl:mx-32 2xl:mx-auto 2xl:px-32 2xl:max-w-screen-2xl  ${className}`}>
 			{children}
 		</div>
 	);

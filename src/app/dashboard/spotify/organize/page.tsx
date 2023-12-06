@@ -14,37 +14,41 @@ export default function Page() {
 				Organize
 			</TextHeading>
 			<div className="grid lg:grid-cols-2 gap-4">
-				<TextBody size="medium" className="flex flex-col gap-4">
-					<div className="mb-2">
-						Organize your music library. Group selected songs by
-						genre, speed, mood and more.
-					</div>
-					<OrderedList>
-						<TextBody size="medium">
-							Select the tracks you want to organize
-						</TextBody>
-						<TextBody size="medium">
-							Select the grouping criteria.
-						</TextBody>
-						<TextBody size="medium">
-							Let our algorithm do it's magic
-						</TextBody>
-						<TextBody size="medium">
-							Choose which playlists you want to save to your
-							Spotify account and which not
-						</TextBody>
-					</OrderedList>
-				</TextBody>
+				<div>
+					<TextBody size="medium" className="flex flex-col gap-4">
+						<div className="mb-2">
+							Organize your music library. Group selected songs by
+							genre, speed, mood and more.
+						</div>
+						<OrderedList>
+							<TextBody size="medium">
+								Select the tracks you want to organize
+							</TextBody>
+							<TextBody size="medium">
+								Select the grouping criteria.
+							</TextBody>
+							<TextBody size="medium">
+								Let our algorithm do it's magic
+							</TextBody>
+							<TextBody size="medium">
+								Choose which playlists you want to save to your
+								Spotify account and which not
+							</TextBody>
+						</OrderedList>
+					</TextBody>
+					<Link href="/dashboard/spotify/organize/process">
+						<ShadowButton onClick={() => {}} className="mt-8">
+							<TextTitle size={"medium"}>
+								Start organizing
+							</TextTitle>
+						</ShadowButton>
+					</Link>
+				</div>
 				<OrganizeIllustration
 					animated={true}
 					className="w-full hidden lg:block"
 				/>
 			</div>
-			<Link href="/dashboard/spotify/organize/process">
-				<ShadowButton onClick={() => {}} className="mt-4">
-					<TextTitle size={"medium"}>Start organizing</TextTitle>
-				</ShadowButton>
-			</Link>
 		</>
 	);
 }

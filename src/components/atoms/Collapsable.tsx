@@ -18,21 +18,43 @@ export default function Collapsable({
 	const [isCollapsed, setIsCollapsed] = useState(
 		defaultState === "collapsed",
 	);
-	const [animationFinished, setAnimationFinished] = useState(true);
+	const [isTransitioning, setIsTransitioning] = useState(false);
+	const [transitionTiming, setTransitionTiming] = useState("linear");
 	const childContainerRef = useRef<HTMLDivElement>(null);
 
+	const calculateTransitionTiming = (): string => {
+		const MAX_HEIGHT = 500;
+		const clientHeight =
+			childContainerRef.current?.clientHeight || MAX_HEIGHT;
+
+		if (clientHeight < MAX_HEIGHT) {
+			return "ease-in";
+		}
+
+		if (isCollapsed) {
+			return `cubic-bezier(${Math.min(
+				0.42,
+				clientHeight / MAX_HEIGHT,
+			)},0,1,1)`;
+		}
+
+		return `cubic-bezier(0,${Math.min(1, clientHeight / MAX_HEIGHT)},0,1)`;
+	};
 	const onClick = () => {
 		setIsCollapsed(!isCollapsed);
-		setAnimationFinished(false);
+		setTransitionTiming(calculateTransitionTiming());
+		setIsTransitioning(true);
 		setTimeout(() => {
-			setAnimationFinished(true);
+			setIsTransitioning(false);
 		}, TRANSITION_DURATION_MS);
 	};
+
+	console.log("transitiontiming", transitionTiming);
 
 	return (
 		<div
 			className={`${
-				!isCollapsed && animationFinished
+				!isCollapsed && !isTransitioning
 					? "overflow-visible"
 					: "overflow-hidden"
 			}`}>
@@ -51,13 +73,11 @@ export default function Collapsable({
 					transitionDuration: `${TRANSITION_DURATION_MS}ms`,
 					maxHeight: isCollapsed
 						? "0"
-						: `${
-								childContainerRef?.current?.clientHeight || 2000
-						  }px`,
+						: `${childContainerRef?.current?.clientHeight}px`,
+					transitionTimingFunction: transitionTiming,
 				}}
-				className="transition-all"
-				ref={childContainerRef}>
-				{children}
+				className="transition-all">
+				<div ref={childContainerRef}>{children}</div>
 			</div>
 		</div>
 	);
