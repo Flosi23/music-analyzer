@@ -19,14 +19,17 @@ export default function ProgressBar({
 
 	return (
 		<div
-			className={`flex rounded-full mt-1 overflow-hidden w-full h-4 ${backgroundColor} ${className}`}>
+			className={`flex rounded-full mt-1 overflow-hidden w-full h-4 ${className}`}>
 			<div
 				style={{ width: `${progressInPercent}%` }}
-				className={`rounded-full ${color}`}
+				className={`${color} rounded-r-full z-10`}
 			/>
 			<div
-				style={{ width: `${100 - progressInPercent}%` }}
-				className="rounded-full"
+				style={{
+					width: `calc(${100 - progressInPercent}% + 10%)`,
+					marginLeft: "-10%",
+				}}
+				className={`rounded-r-full ${backgroundColor}`}
 			/>
 		</div>
 	);
