@@ -1,5 +1,6 @@
-import {PropsWithChildren} from "react";
-import Text, {TypographyProps} from "@components/text/Text";
+"use client";
+import { PropsWithChildren } from "react";
+import Text, { TypographyProps } from "@components/text/Text";
 
 /**
  * Body styles are used for longer

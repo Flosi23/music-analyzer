@@ -1,10 +1,10 @@
+"use client";
 import React, {
 	FormEventHandler,
 	KeyboardEventHandler,
 	PropsWithChildren,
 	useRef,
 } from "react";
-
 export interface TypographyProps {
 	size: "small" | "medium" | "large";
 	className?: string;

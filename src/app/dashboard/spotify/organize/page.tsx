@@ -28,7 +28,7 @@ export default function Page() {
 								Select the grouping criteria.
 							</TextBody>
 							<TextBody size="medium">
-								Let our algorithm do it's magic
+								Let our algorithm do it&aposs magic
 							</TextBody>
 							<TextBody size="medium">
 								Choose which playlists you want to save to your
